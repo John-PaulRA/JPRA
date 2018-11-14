@@ -26,25 +26,42 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
+
         window.addEventListener("batterystatus", this.onBatteryStatus, false);
-     /**   navigator.getBattery().then(function(battery) {
-           document.getElementById('battery_level').innerHTML(battery.level);
-          battery.onlevelchange = function() {
-           document.getElementById('batter_level').innerHTML(battery.level);
-            };
-        });*/
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
     
     onBatteryStatus: function(status) {
-            document.getElementById('battery_level').innerHTML="Level: " + status.level + " isPlugged: " + status.isPlugged;
+            document.getElementById('batter_level').innerHTML="Level: " + status.level + " isPlugged: " + status.isPlugged;
     },
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+
+        document.getElementById('device_info').innerHTML= device.model+' '+device.platform+' '+device.uuid;
+var onSuccess = function(position) {
+        alert('Latitude: '          + position.coords.latitude          + '\n' +
+              'Longitude: '         + position.coords.longitude         + '\n' +
+              'Altitude: '          + position.coords.altitude          + '\n' +
+              'Accuracy: '          + position.coords.accuracy          + '\n' +
+              'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+              'Heading: '           + position.coords.heading           + '\n' +
+              'Speed: '             + position.coords.speed             + '\n' +
+              'Timestamp: '         + position.timestamp                + '\n');
+    };
+ 
+    // onError Callback receives a PositionError object
+    //
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+              'message: ' + error.message + '\n');
+    }
+ 
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
     },
+
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
