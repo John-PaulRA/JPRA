@@ -45,13 +45,15 @@
 <body>
     <div class="app">
         <h1>SOO</h1>
+        <p id="batter_level"></p>
         <a href="./page1.html">GO</a>
+        <p id="battery_level"></p>
         <div id="deviceready" class="blink">
             <p class="event listening">Connecting to Device</p>
             <p class="event received">Hello</p>
         </div>
     </div>
-    <plugin name="cordova-plugin-example" spec="2.2.1" />
+    <plugin name="cordova-plugin-battery-status" spec="~2.0.2" />
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">

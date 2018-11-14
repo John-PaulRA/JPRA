@@ -26,6 +26,12 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
+        navigator.getBattery().then(function(battery) {
+           $('#battery_level').html(battery.level);
+          battery.onlevelchange = function() {
+            $('#batter_level').html(this.level);                            
+            };
+        });
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
