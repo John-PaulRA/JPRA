@@ -26,16 +26,20 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-        navigator.getBattery().then(function(battery) {
+        window.addEventListener("batterystatus", onBatteryStatus, false);
+     /**   navigator.getBattery().then(function(battery) {
            document.getElementById('battery_level').innerHTML(battery.level);
           battery.onlevelchange = function() {
            document.getElementById('batter_level').innerHTML(battery.level);
             };
-        });
+        });*/
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
-    //
+    
+    function onBatteryStatus(status) {
+            document.getElementById('battery_level').innerHTML="Level: " + status.level + " isPlugged: " + status.isPlugged;
+    }
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
