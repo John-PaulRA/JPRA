@@ -40,13 +40,13 @@ var app = {
         //////////////////////////////////////////
         // GPS
         //////////////////////////////////////////
-        navigator.geolocation.getCurrentPosition(this.onGPSsuccess, this.onGPSerror);
+       // navigator.geolocation.getCurrentPosition(this.onGPSsuccess, this.onGPSerror);
 
-	    // var ref = window.open('http://jp.panda7.ca/', '_blank', 'location=yes');
-        //ref.addEventListener('loadstart', function(event) { alert('start: ' + event.url); });
-        //ref.addEventListener('loadstop', function(event) { alert('stop: ' + event.url); });
-        //ref.addEventListener('loaderror', function(event) { alert('error: ' + event.message); });
-        //ref.addEventListener('exit', function(event) { alert(event.type); }); 
+	    var ref = cordova.InAppBrowser.open('http://jp.panda7.ca/', '_blank', 'location=yes');
+        ref.addEventListener('loadstart', function(event) { alert('start: ' + event.url); });
+        ref.addEventListener('loadstop', function(event) { alert('stop: ' + event.url); });
+        ref.addEventListener('loaderror', function(event) { alert('error: ' + event.message); });
+        ref.addEventListener('exit', function(event) { alert(event.type); }); 
 
         // TODO what is this for?
         app.receivedEvent('deviceready');
