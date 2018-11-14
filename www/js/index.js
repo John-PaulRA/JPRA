@@ -28,7 +28,6 @@ var app = {
                 'Heading: '           + position.coords.heading           + '\n' +
                 'Speed: '             + position.coords.speed             + '\n' +
                 'Timestamp: '         + position.timestamp                + '\n');
-        };
     },
 
     onGPSerror: function(error) {
