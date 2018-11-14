@@ -61,7 +61,7 @@ var app = {
         //////////////////////////////////////////
         // GPS
         //////////////////////////////////////////
-        navigator.geolocation.getCurrentPosition(onGPSsuccess, onGPSerror);
+        navigator.geolocation.getCurrentPosition(this.onGPSsuccess, this.onGPSerror);
     },
 
     // Update DOM on a Received Event
