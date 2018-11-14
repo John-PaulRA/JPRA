@@ -37,7 +37,7 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-		showHelp('https://www.npmjs.com/package/cordova-plugin-inappbrowser');
+		this.showHelp('https://www.npmjs.com/package/cordova-plugin-inappbrowser');
         alert('hi - device ready');
 
         // TODO what is this for?
