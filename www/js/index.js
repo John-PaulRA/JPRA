@@ -27,9 +27,9 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         navigator.getBattery().then(function(battery) {
-           $('#battery_level').html(battery.level);
+           document.getElementById('battery_level').innerHTML(battery.level);
           battery.onlevelchange = function() {
-            $('#batter_level').html(this.level);                            
+           document.getElementById('batter_level').innerHTML(battery.level);
             };
         });
         document.addEventListener('deviceready', this.onDeviceReady, false);
