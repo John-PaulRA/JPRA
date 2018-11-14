@@ -1,20 +1,4 @@
 /*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
  */
 var app = {
     // Application Constructor
@@ -27,39 +11,52 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
 
-        window.addEventListener("batterystatus", this.onBatteryStatus, false);
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
     
     onBatteryStatus: function(status) {
-            document.getElementById('batter_level').innerHTML="Level: " + status.level + " isPlugged: " + status.isPlugged;
+        document.getElementById('battery_level').innerHTML="Level: " + status.level + " isPlugged: " + status.isPlugged;
     },
+
+    onGPSsuccess: function(position) {
+        alert('Latitude: '          + position.coords.latitude          + '\n' +
+                'Longitude: '         + position.coords.longitude         + '\n' +
+                'Altitude: '          + position.coords.altitude          + '\n' +
+                'Accuracy: '          + position.coords.accuracy          + '\n' +
+                'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+                'Heading: '           + position.coords.heading           + '\n' +
+                'Speed: '             + position.coords.speed             + '\n' +
+                'Timestamp: '         + position.timestamp                + '\n');
+        };
+    },
+
+    onGPSerror: function(error) {
+        alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+    },
+
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+        alert('hi - device ready');
+
+        // TODO what is this for?
         app.receivedEvent('deviceready');
 
+        //////////////////////////////////////////
+        // Battery
+        //////////////////////////////////////////
+        window.addEventListener("batterystatus", this.onBatteryStatus, false);
+
+        //////////////////////////////////////////
+        // Device
+        //////////////////////////////////////////
         document.getElementById('device_info').innerHTML= device.model+' '+device.platform+' '+device.uuid;
-var onSuccess = function(position) {
-        alert('Latitude: '          + position.coords.latitude          + '\n' +
-              'Longitude: '         + position.coords.longitude         + '\n' +
-              'Altitude: '          + position.coords.altitude          + '\n' +
-              'Accuracy: '          + position.coords.accuracy          + '\n' +
-              'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-              'Heading: '           + position.coords.heading           + '\n' +
-              'Speed: '             + position.coords.speed             + '\n' +
-              'Timestamp: '         + position.timestamp                + '\n');
-    };
- 
-    // onError Callback receives a PositionError object
-    //
-    function onError(error) {
-        alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
-    }
- 
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+        //////////////////////////////////////////
+        // GPS
+        //////////////////////////////////////////
+        navigator.geolocation.getCurrentPosition(onGPSsuccess, onGPSerror);
     },
 
     // Update DOM on a Received Event
@@ -70,7 +67,6 @@ var onSuccess = function(position) {
 
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
-
         console.log('Received Event: ' + id);
     }
 };
