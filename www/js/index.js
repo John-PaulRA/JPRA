@@ -37,6 +37,7 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+		showHelp('https://www.npmjs.com/package/cordova-plugin-inappbrowser');
         alert('hi - device ready');
 
         // TODO what is this for?
@@ -67,5 +68,68 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
         console.log('Received Event: ' + id);
-    }
+    },
+	inAppBrowserRef: '',
+
+	 showHelp: function(url) {
+	 
+		var target = "_blank";
+	 
+		var options = "location=yes,hidden=yes";
+	 
+		this.inAppBrowserRef = cordova.InAppBrowser.open(url, target, options);
+	 
+		this.inAppBrowserRef.addEventListener('loadstart', this.loadStartCallBack);
+	 
+		this.inAppBrowserRef.addEventListener('loadstop', this.loadStopCallBack);
+	 
+		this.inAppBrowserRef.addEventListener('loaderror', this.loadErrorCallBack);
+	 
+	},
+	 
+    loadStartCallBack: function() {
+	 
+		$('#status-message').text("loading please wait ...");
+	 
+	},
+	 
+    loadStopCallBack: function() {
+	 
+		if (this.inAppBrowserRef != undefined) {
+	 
+			this.inAppBrowserRef.insertCSS({ code: "body{font-size: 25px;" });
+	 
+			$('#status-message').text("");
+	 
+			this.inAppBrowserRef.show();
+		}
+	 
+	},
+	 
+	loadErrorCallBack: function(params) {
+	 
+		$('#status-message').text("");
+	 
+		var scriptErrorMesssage =
+		   "alert('Sorry we cannot open that page. Message from the server is : "
+		   + params.message + "');"
+	 
+		this.inAppBrowserRef.executeScript({ code: scriptErrorMesssage }, executeScriptCallBack);
+	 
+		this.inAppBrowserRef.close();
+	 
+		this.inAppBrowserRef = undefined;
+	 
+	},
+	 
+	executeScriptCallBack: function(params) {
+	 
+		if (params[0] == null) {
+	 
+			$('#status-message').text(
+			   "Sorry we couldn't open that page. Message from the server is : '"
+			   + params.message + "'");
+		}
+	 
+	},
 };
