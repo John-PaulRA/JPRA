@@ -37,16 +37,32 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+
+        //Push Notification 
+       /* pushNotification = window.plugins.pushNotification;
+				if ( device.platform == 'android' || device.platform == 'Android' )
+				{
+					pushNotification.register(
+						this.successHandler,
+						this.errorHandler, {
+							"senderID":"replace_with_sender_id",
+							"ecb":"onNotificationGCM"
+						});
+				}*/
+
         //////////////////////////////////////////
         // GPS
         //////////////////////////////////////////
-       // navigator.geolocation.getCurrentPosition(this.onGPSsuccess, this.onGPSerror);
+        // navigator.geolocation.getCurrentPosition(this.onGPSsuccess, this.onGPSerror);
 
-	    var ref = cordova.InAppBrowser.open('http://jp.panda7.ca/', '_blank', 'location=no');
+        // Calling the browser through the app
+ 		    /**
+				var ref = cordova.InAppBrowser.open('http://jp.panda7.ca/', '_blank', 'location=no');
         ref.addEventListener('loadstart', function(event) { alert('start: ' + event.url); });
         ref.addEventListener('loadstop', function(event) { alert('stop: ' + event.url); });
         ref.addEventListener('loaderror', function(event) { alert('error: ' + event.message); });
         ref.addEventListener('exit', function(event) { alert(event.type); }); 
+				**/ 
 
         // TODO what is this for?
         app.receivedEvent('deviceready');
@@ -61,7 +77,16 @@ var app = {
         //////////////////////////////////////////
         document.getElementById('device_info').innerHTML= device.model+' '+device.platform+' '+device.uuid;
 
-           },
+    },
+		// result contains any message sent from the plugin call
+		function successHandler (result) {
+			alert('result = ' + result);
+		},
+
+		// result contains any error description text returned from the plugin call
+		function errorHandler (error) {
+			alert('error = ' + error);
+		},
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {
