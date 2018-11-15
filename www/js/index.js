@@ -79,12 +79,12 @@ var app = {
 
     },
 		// result contains any message sent from the plugin call
-		function successHandler (result) {
+		successHandler: function(result) {
 			alert('result = ' + result);
 		},
 
 		// result contains any error description text returned from the plugin call
-		function errorHandler (error) {
+		errorHandler: function(error) {
 			alert('error = ' + error);
 		},
 
